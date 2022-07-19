@@ -8,6 +8,9 @@ module.exports = {
       },
       colors: {
         'newfire-blue': '#3F65BA'
+      },
+      screens: {
+        'phone': '320px'
       }
     },
   },
