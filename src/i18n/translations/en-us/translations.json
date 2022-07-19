@@ -6,5 +6,8 @@
 		"forgot_password": "Forgot Password?",
 		"remember_me": "Remember Me",
 		"button": "log in"
+	},
+	"error": {
+		"required": "*This field is required!"
 	}
 }

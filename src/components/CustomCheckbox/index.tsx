@@ -3,6 +3,8 @@ import { MutableRefObject } from "react";
 export default function CustomCheckbox(props: {
   label: string;
   refs: MutableRefObject<HTMLInputElement[]>;
+  setValues: Function;
+  values: { checked: boolean };
 }) {
   return (
     <div className="custom-input-container flex w-full pl-1">
@@ -11,7 +13,14 @@ export default function CustomCheckbox(props: {
         type="checkbox"
         id={`my-input-${props.label}`}
         ref={(e) => {
-          if (e) props.refs.current.push(e);
+          if (
+            e &&
+            props.refs.current.findIndex((element) => element.id === e.id) < 0
+          )
+            props.refs.current.push(e);
+        }}
+        onClick={() => {
+          props.setValues({ ...props.values, checked: !props.values.checked });
         }}
       />
       <label
