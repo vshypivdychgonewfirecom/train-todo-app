@@ -1,29 +1,48 @@
-import { MutableRefObject, useState } from "react";
+import React, { MutableRefObject, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function CustomInput(props: {
   label: string;
   refs: MutableRefObject<HTMLInputElement[]>;
-  setValues: Function;
-  values: {};
+  placeholder: string;
   type?: string;
-  className?: string;
   required?: boolean;
+  validation?: Function;
 }) {
   const { t } = useTranslation("error");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState({
+    active: false,
+    message: "",
+  });
+  const [button, setButton] = useState<HTMLButtonElement>();
 
-  function changeValue(value: string) {
-    props.setValues({
-      ...props.values,
-      [props.label.toLocaleLowerCase()]: value,
-    });
+  function setErrorAndChecked(
+    e: React.FocusEvent<HTMLInputElement, Element>,
+    bool: boolean,
+    message: string
+  ) {
+    setError({ active: bool, message: message });
+    e.target.dataset.valid = !bool ? "valid" : "";
   }
+
+  function setButtonDisabled(disabled: boolean) {
+    if (button) button.disabled = disabled;
+  }
+
+  useEffect(
+    () =>
+      setButton(
+        document.getElementById("login-submit-button") as HTMLButtonElement
+      ),
+    []
+  );
 
   return (
     <div className="custom-input-container flex flex-col mb-3 last:mb-0 w-full">
       <label
-        className={`mb-1 text-sm sm:text-base ${error ? "text-red-500" : ""}`}
+        className={`mb-1 text-sm sm:text-base ${
+          error.active ? "text-red-500" : ""
+        }`}
         htmlFor={`my-input-${props.label}`}
         data-testid="custom-input-label"
       >
@@ -31,9 +50,10 @@ export default function CustomInput(props: {
       </label>
       <input
         className={`border-2 tracking-wider  border-slate-300 rounded-lg p-3 text-sm sm:text-base w-full ${
-          props.className
-        } ${error ? "border-red-500" : ""}`}
+          error.active ? "border-red-500" : ""
+        }`}
         type={props.type}
+        placeholder={props.placeholder}
         id={`my-input-${props.label}`}
         ref={(e) => {
           if (
@@ -42,24 +62,34 @@ export default function CustomInput(props: {
           )
             props.refs.current.push(e);
         }}
+        data-valid=""
         onBlur={(e) => {
-          if (e.target.value) {
-            changeValue(e.target.value);
-            setError(false);
+          if (props.required && !e.target.value) {
+            setErrorAndChecked(e, true, t("required"));
+            setButtonDisabled(true);
             return;
           }
 
-          changeValue('');
-
-          if (props.required) {
-            setError(true);
+          if (props.validation && !props.validation(e.target.value)) {
+            setErrorAndChecked(e, true, t("email"));
+            setButtonDisabled(true);
             return;
+          }
+
+          setErrorAndChecked(e, false, "");
+
+          if (
+            props.refs.current.findIndex(
+              (element) => !element.value || !element.dataset.valid
+            ) < 0
+          ) {
+            setButtonDisabled(false);
           }
         }}
         data-testid="custom-input-input"
       />
-      {error && (
-        <small className="text-red-500 pl-1 mt-1">{t("required")}</small>
+      {error.active && (
+        <small className="text-red-500 pl-1 mt-1">{error.message}</small>
       )}
     </div>
   );
@@ -69,4 +99,5 @@ CustomInput.defaultProps = {
   type: "text",
   classname: "",
   required: false,
+  validation: () => true,
 };
