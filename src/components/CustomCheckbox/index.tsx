@@ -1,9 +1,9 @@
 import { MutableRefObject } from "react";
 
-export default function CustomCheckbox(props: {
+export default (props: {
   label: string;
   refs: MutableRefObject<null>;
-}) {
+}) => {
   return (
     <div className="custom-input-container flex w-full pl-1">
       <input

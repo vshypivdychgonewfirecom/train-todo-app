@@ -1,14 +1,14 @@
 import React, { MutableRefObject, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
-export default function CustomInput(props: {
+const CustomInput = (props: {
   label: string;
   refs: MutableRefObject<HTMLInputElement[]>;
   placeholder: string;
   type?: string;
   required?: boolean;
   validation?: Function;
-}) {
+}) => {
   const { t } = useTranslation("error");
   const [error, setError] = useState({
     active: false,
@@ -16,18 +16,18 @@ export default function CustomInput(props: {
   });
   const [button, setButton] = useState<HTMLButtonElement>();
 
-  function setErrorAndChecked(
+  const setErrorAndChecked = (
     e: React.FocusEvent<HTMLInputElement, Element>,
     bool: boolean,
     message: string
-  ) {
+  ) => {
     setError({ active: bool, message: message });
     e.target.dataset.valid = !bool ? "valid" : "";
-  }
+  };
 
-  function setButtonDisabled(disabled: boolean) {
+  const setButtonDisabled = (disabled: boolean) => {
     if (button) button.disabled = disabled;
-  }
+  };
 
   useEffect(
     () =>
@@ -93,7 +93,7 @@ export default function CustomInput(props: {
       )}
     </div>
   );
-}
+};
 
 CustomInput.defaultProps = {
   type: "text",
@@ -101,3 +101,5 @@ CustomInput.defaultProps = {
   required: false,
   validation: () => true,
 };
+
+export default CustomInput;

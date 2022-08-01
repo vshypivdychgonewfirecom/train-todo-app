@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 
-export default function AppRoutes() {
+export default () => {
   return (
     <BrowserRouter>
       <Routes>

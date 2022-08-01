@@ -7,7 +7,7 @@ import { emailValidation } from "../../utils/validations";
 
 const logo = require("../../resource/images/logo.png");
 
-export default function Login() {
+export default () => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,15 +28,15 @@ export default function Login() {
     },
     {
       label: t("passowrd"),
-      placeholder: `${t("passowrd").charAt(0).toLocaleUpperCase()}${t(
-        "passowrd"
-      ).slice(1)}`,
+      placeholder: `${t("passowrd")
+        .charAt(0)
+        .toLocaleUpperCase()}${t("passowrd").slice(1)}`,
       required: true,
       type: "password",
     },
   ];
 
-  function handleSubmit() {
+  const handleSubmit = () => {
     if (
       inputFormRefs.current.findIndex(
         (element) => !element.value || !element.dataset.valid
@@ -48,7 +48,7 @@ export default function Login() {
       sessionStorage.setItem("newfire-train-todo-app-token", "test");
       navigate("/");
     }
-  }
+  };
 
   useEffect(() => {
     inputFormRefs.current[0].focus();
@@ -97,4 +97,4 @@ export default function Login() {
       </form>
     </div>
   );
-}
+};
