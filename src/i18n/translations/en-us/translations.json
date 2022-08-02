@@ -5,10 +5,11 @@
 		"password": "Password",
 		"forgot_password": "Forgot Password?",
 		"remember_me": "Remember Me",
-		"button": "log in"
-	},
-	"error": {
-		"required": "*This field is required!",
-		"email": "*Please enter a vaild e-mail address"
+		"button": "log in",
+		"error": {
+			"required": "*This field is required!",
+			"email": "*Please enter a vaild e-mail address",
+			"password": "*Invalid password"
+		}
 	}
 }

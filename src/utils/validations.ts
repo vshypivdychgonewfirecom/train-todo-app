@@ -1,3 +1,1 @@
-export const emailValidation = (email: string) => {
-  return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email);
-}
+export const emailValidation = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
