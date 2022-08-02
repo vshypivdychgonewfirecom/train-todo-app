@@ -6,6 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import CustomInput from "../../components/CustomInput";
 import CustomCheckbox from "../../components/CustomCheckbox";
+import CustomButton from "../../components/CustomButton";
 import { emailValidation } from "../../utils/validations";
 
 const logo = require("../../resource/images/logo.png");
@@ -112,17 +113,12 @@ export default () => {
         <hr className="w-full my-8 d-none" />
         <div className="w-full justify-center pl-1 sm:w-fit flex flex-col-reverse self-center sm:self-start sm:flex-row items-center">
           <CustomCheckbox label={t("remember_me")} refs={checkboxRef} />
-          <button
-            className={`w-full sm:w-36 mb-3 sm:mb-0 py-2 px-5 
-              bg-amber-500 text-base sm:text-lg font-bold 
-              text-white rounded-lg hover:bg-amber-400 disabled:bg-gray-300`}
+          <CustomButton
+            text={t("button").toLocaleUpperCase()}
             id="login-submit-button"
-            type="submit"
             disabled={disabled}
             onClick={handleSubmit(onSubmit)}
-          >
-            {t("button").toLocaleUpperCase()}
-          </button>
+          />
         </div>
       </form>
     </div>
