@@ -9,6 +9,11 @@ module.exports = {
 		'plugin:react/jsx-runtime',
 		'standard'
 	],
+	settings: {
+		react: {
+			version: 'detect'
+		}
+	},
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		ecmaFeatures: {
