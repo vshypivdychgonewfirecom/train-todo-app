@@ -4,5 +4,5 @@
 	"jsxSingleQuote": false,
 	"trailingComma": "none",
 	"tabWidth": 4,
-  "quoteProps": "consistent"
+	"quoteProps": "consistent"
 }

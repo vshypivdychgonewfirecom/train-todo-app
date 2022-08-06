@@ -1,4 +1,5 @@
 module.exports = {
+	ignorePatterns: ['public/*', 'node_modules/*', 'README.md'],
 	env: {
 		browser: true,
 		es2021: true
