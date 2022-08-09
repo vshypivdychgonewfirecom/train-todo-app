@@ -2,7 +2,7 @@
 
 export default (props: {
   open: boolean;
-  setOpen: Function;
+  onClose: Function;
   title: string;
   content: JSX.Element;
   footer?: JSX.Element;
@@ -27,7 +27,7 @@ export default (props: {
                 <button
                   type="button"
                   className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                  onClick={() => props.setOpen(false)}
+                  onClick={() => props.onClose()}
                 >
                   <svg
                     aria-hidden="true"

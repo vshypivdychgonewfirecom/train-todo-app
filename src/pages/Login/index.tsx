@@ -14,7 +14,7 @@ const logo = require("../../resource/images/logo.png");
 
 export default () => {
   const navigate = useNavigate();
-  let { t } = useTranslation(["login", "error"]);
+  const { t } = useTranslation(["login", "error"]);
   const schema = yup
     .object({
       email: yup

@@ -2,8 +2,9 @@
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { TextField } from "@mui/material";
 import DateFnsAdapter from "@date-io/date-fns";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import { DeepRequired, FieldErrorsImpl, FieldValues } from "react-hook-form";
+import { ReactI18NextChild } from "react-i18next";
 
 export default (props: {
   label: string;
@@ -14,16 +15,18 @@ export default (props: {
 }) => {
   const [date, setDate] = useState(null);
 
+  const changeHandler = (newDate: SetStateAction<null>) => {
+    setDate(newDate);
+    props.setValue(props.label, newDate);
+    if (props.trigger) props.trigger(props.label);
+  };
+
   return (
     <LocalizationProvider dateAdapter={DateFnsAdapter}>
       <DatePicker
         label={props.label}
         value={date}
-        onChange={(newDate) => {
-          setDate(newDate);
-          props.setValue(props.label, newDate);
-          if (props.trigger) props.trigger(props.label);
-        }}
+        onChange={changeHandler}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -31,9 +34,9 @@ export default (props: {
           />
         )}
       />
-      {props.error && props.error[props.label] && (
+      {props.error && (
         <small className="text-red-500 pl-1 mt-1">
-          {props.error[props.label]?.message as any}
+          {props.error[props.label]?.message as ReactI18NextChild | Iterable<ReactI18NextChild>}
         </small>
       )}
     </LocalizationProvider>

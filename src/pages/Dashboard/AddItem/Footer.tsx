@@ -13,7 +13,7 @@ export default (props: { handleCancel: Function, handleConfirm: Function }) => {
         className="bg-blue-700 hover:bg-blue-800"
       />
       <CustomButton
-        onClick={() => props.handleCancel(false)}
+        onClick={() => props.handleCancel()}
         text={t('add_item.modal.buttons.cancel')}
         className="bg-red-700 hover:bg-red-800"
       />

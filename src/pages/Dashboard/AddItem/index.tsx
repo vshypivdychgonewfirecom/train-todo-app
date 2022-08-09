@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -8,7 +8,7 @@ import CustomSelect from "../../../components/CustomSelect";
 import Footer from "./Footer";
 
 /* eslint-disable import/no-anonymous-default-export */
-export default (props: { setOpen: Function }) => {
+export default (props: { onClose: Function }) => {
   const { t } = useTranslation(["dashboard", "error"]);
   const schema = yup
     .object({
@@ -30,7 +30,7 @@ export default (props: { setOpen: Function }) => {
     trigger,
     handleSubmit,
     getValues,
-    setValue
+    setValue,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -39,10 +39,9 @@ export default (props: { setOpen: Function }) => {
     returnObjects: true,
   });
 
-  const onSubmit = (values: any) => {
-    console.log(values)
-    props.setOpen(false)
-  }
+  const onSubmit = (values: FieldValues) => {
+    props.onClose();
+  };
 
   return (
     <>
@@ -68,7 +67,7 @@ export default (props: { setOpen: Function }) => {
           cols={40}
           {...register("description")}
           onBlur={() => {
-            console.log(getValues())
+            console.log(getValues());
           }}
         />
         {errors["description"] && (
@@ -92,7 +91,10 @@ export default (props: { setOpen: Function }) => {
         options={priorities}
         defaultValue={"Medium"}
       />
-      <Footer handleConfirm={handleSubmit(onSubmit)} handleCancel={props.setOpen} />
+      <Footer
+        handleConfirm={handleSubmit(onSubmit)}
+        handleCancel={props.onClose}
+      />
     </>
   );
 };

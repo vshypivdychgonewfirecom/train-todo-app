@@ -25,9 +25,9 @@ export default () => {
     <div className="home-container flex flex-col">
       <CustomModal
         open={addItemModal}
-        setOpen={setAddItemModal}
+        onClose={() => setAddItemModal(false)}
         title={t("add_item.label")}
-        content={<AddItem setOpen={setAddItemModal} />}
+        content={<AddItem onClose={() => setAddItemModal(false)} />}
       />
       <CustomButton onClick={() => setAddItemModal(true)} text="Add Item" />
       <CustomButton
