@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import CustomButton from "../../components/CustomButton";
 import CustomModal from "../../components/CustomModal";
 import AddItem from "./AddItem";
-import Footer from "./AddItem/Footer";
 
 export default () => {
   const { t } = useTranslation("dashboard");

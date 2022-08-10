@@ -78,7 +78,8 @@ export default (props: { onClose: Function }) => {
       </div>
       <div className="w-40">
         <CustomDatePicker
-          label="dueDate"
+          label={t("add_item.modal.due_date", { ns: "dashboard" })}
+          name="dueDate"
           setValue={setValue}
           value={getValues("dueDate")}
           error={errors}

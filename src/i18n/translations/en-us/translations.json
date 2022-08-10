@@ -12,7 +12,7 @@
 			"modal": {
 				"label": "Label",
 				"description": "Description",
-				"dua_date": "Due Date",
+				"due_date": "Due Date",
 				"priority": {
 					"label": "Priority",
 					"items": [

@@ -18,7 +18,7 @@ export default (props: {
       <select
         {...props.register(props.label)}
         defaultValue={props.defaultValue}
-        className="w-28 p-2 rounded-lg cursor-pointer border-solid border-2 border-slate-300 mt-2"
+        className="w-28 p-2 rounded-lg cursor-pointer border-solid border-2 border-slate-300"
       >
         {props.options.map((value) => (
           <option key={value} value={value}>

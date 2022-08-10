@@ -1,44 +1,49 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { TextField } from "@mui/material";
-import DateFnsAdapter from "@date-io/date-fns";
-import { SetStateAction, useState } from "react";
+import DatePicker from "react-date-picker";
+import { useState } from "react";
 import { DeepRequired, FieldErrorsImpl, FieldValues } from "react-hook-form";
 import { ReactI18NextChild } from "react-i18next";
+import "./style.css";
 
 export default (props: {
   label: string;
+  name: string;
   value: Date | null;
   setValue: Function;
   trigger?: Function;
   error?: FieldErrorsImpl<DeepRequired<FieldValues>>;
 }) => {
-  const [date, setDate] = useState(null);
+  const [date, setDate] = useState<Date>();
 
-  const changeHandler = (newDate: SetStateAction<null>) => {
+  const changeHandler = (newDate: Date) => {
     setDate(newDate);
-    props.setValue(props.label, newDate);
-    if (props.trigger) props.trigger(props.label);
+    props.setValue(props.name, newDate);
+    if (props.trigger) props.trigger(props.name);
   };
 
   return (
-    <LocalizationProvider dateAdapter={DateFnsAdapter}>
+    <>
+      <label
+        className={`mb-2 text-sm sm:text-base ${
+          props.error && props.error[props.name] ? "text-red-500" : ""
+        }`}
+      >
+        {props.label}
+      </label>
       <DatePicker
-        label={props.label}
         value={date}
         onChange={changeHandler}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            error={props.error && !!props.error[props.label]}
-          />
-        )}
+        className={`mt-1 ${props.error && props.error[props.name] ? "error" : ""}`}
       />
       {props.error && (
         <small className="text-red-500 pl-1 mt-1">
-          {props.error[props.label]?.message as ReactI18NextChild | Iterable<ReactI18NextChild>}
+          {
+            props.error[props.name]?.message as
+              | ReactI18NextChild
+              | Iterable<ReactI18NextChild>
+          }
         </small>
       )}
-    </LocalizationProvider>
+    </>
   );
 };

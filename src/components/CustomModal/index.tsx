@@ -44,7 +44,7 @@ export default (props: {
                   </svg>
                 </button>
               </header>
-              <div className="p-6 space-y-6 flex flex-col">{props.content}</div>
+              <div className="p-4 space-y-4 flex flex-col">{props.content}</div>
               {props.footer}
             </div>
           </div>

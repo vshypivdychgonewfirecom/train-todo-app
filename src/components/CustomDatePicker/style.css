@@ -1,0 +1,9 @@
+.react-date-picker__wrapper {
+	padding: 6px 8px;
+	border-radius: 8px;
+	border: 2px solid rgb(203, 213, 225);
+}
+
+.error > .react-date-picker__wrapper {
+	border-color: rgb(239, 68, 68);
+}
