@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 export default (props: {
   text: string;
   onClick: Function;
@@ -10,8 +11,8 @@ export default (props: {
   bg-amber-500 text-base sm:text-lg font-bold 
   text-white rounded-lg hover:bg-amber-400 disabled:bg-gray-300 ${props.className}`}
     id={props.id}
-	disabled={props.disabled}
-	onClick={() => props.onClick()}
+    disabled={props.disabled}
+    onClick={() => props.onClick()}
   >
     {props.text}
   </button>

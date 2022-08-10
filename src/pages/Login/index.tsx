@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import { useRef, useEffect, useState, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -13,17 +14,17 @@ const logo = require("../../resource/images/logo.png");
 
 export default () => {
   const navigate = useNavigate();
-  const { t } = useTranslation("login");
+  const { t } = useTranslation(["login", "error"]);
   const schema = yup
     .object({
       email: yup
         .string()
-        .required(t("error.required"))
-        .matches(emailValidation, t("error.email")),
+        .required(t("required", { ns: "error" }))
+        .matches(emailValidation, t("email", { ns: "error" })),
       password: yup
         .string()
-        .required(t("error.required"))
-        .min(6, t("error.password")),
+        .required(t("required", { ns: "error" }))
+        .min(6, t("password", { ns: "error" })),
     })
     .required();
   const {
@@ -43,9 +44,7 @@ export default () => {
     },
     {
       label: "password",
-      placeholder: `${t("password")
-        .charAt(0)
-        .toLocaleUpperCase()}${t("password").slice(1)}`,
+      placeholder: "password",
       type: "password",
     },
   ];
@@ -95,7 +94,9 @@ export default () => {
         className="bg-white w-10/12 p-7 sm:p-10 z-10 flex flex-col rounded-lg shadow-2xl items-center pb-12 sm:w-fit"
       >
         <img src={logo} alt="newfire-logo" className="w-60 mb-7" />
-        <h1 className="mb-7 text-xl sm:text-2xl self-start">{t("title")}</h1>
+        <h1 className="mb-7 text-xl sm:text-2xl self-start">
+          {t("title", { ns: "login" })}
+        </h1>
         {formFields.map((element) => (
           <CustomInput
             key={`login-form-${element.label}`}
@@ -108,13 +109,16 @@ export default () => {
           />
         ))}
         <span className="self-start text-sm sm:text-base pl-1 text-amber-500 cursor-pointer hover:text-amber-300">
-          {t("forgot_password")}
+          {t("forgot_password", { ns: "login" })}
         </span>
         <hr className="w-full my-8 d-none" />
         <div className="w-full justify-center pl-1 sm:w-fit flex flex-col-reverse self-center sm:self-start sm:flex-row items-center">
-          <CustomCheckbox label={t("remember_me")} refs={checkboxRef} />
+          <CustomCheckbox
+            label={t("remember_me", { ns: "login" })}
+            refs={checkboxRef}
+          />
           <CustomButton
-            text={t("button").toLocaleUpperCase()}
+            text={t("button", { ns: "login" }).toLocaleUpperCase()}
             id="login-submit-button"
             disabled={disabled}
             onClick={handleSubmit(onSubmit)}
