@@ -1,5 +1,4 @@
 module.exports = {
-	ignorePatterns: ['public/*', 'node_modules/*', 'README.md'],
 	env: {
 		browser: true,
 		es2021: true
@@ -7,6 +6,8 @@ module.exports = {
 	extends: [
 		'plugin:react/recommended',
 		'plugin:react/jsx-runtime',
+		'plugin:@typescript-eslint/eslint-recommended',
+		'plugin:@typescript-eslint/recommended',
 		'standard'
 	],
 	settings: {
@@ -24,7 +25,7 @@ module.exports = {
 	},
 	plugins: ['react', '@typescript-eslint'],
 	rules: {
-		'no-unused-vars': 'warn',
+		'no-unused-vars': 'error',
 		'no-tabs': 'off',
 		'semi': 'off',
 		'indent': ['error', 'tab'],
