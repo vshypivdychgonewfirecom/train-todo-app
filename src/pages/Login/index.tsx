@@ -64,11 +64,12 @@ export default () => {
       localStorage.setItem("newfire-train-todo-app-token", "test");
 
     sessionStorage.setItem("newfire-train-todo-app-token", "test");
-    navigate("/");
+    navigate("/dashboard");
   };
+
   useEffect(() => {
     if (localStorage.getItem("newfire-train-todo-app-token")) {
-      navigate("/", { replace: true });
+      navigate("/dashboard", { replace: true });
     }
   }, []);
 
