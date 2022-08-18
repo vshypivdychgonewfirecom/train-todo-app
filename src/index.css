@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 body {
-  margin: 0;
-  font-family: defaultFont;
-  letter-spacing: -0.5px;
+	margin: 0;
+	font-family: defaultFont;
+	letter-spacing: -0.5px;
 }
 
 @font-face {
-  font-family: defaultFont;
-  src: url("./resource//font//Montserrat-Regular.ttf");
+	font-family: defaultFont;
+	src: url('./resource//font//Montserrat-Regular.ttf');
 }
