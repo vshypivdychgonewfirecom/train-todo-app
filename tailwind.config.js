@@ -12,6 +12,9 @@ module.exports = {
 			},
 			screens: {
 				phone: '320px'
+			},
+			rotate: {
+				negative: '-45deg'
 			}
 		}
 	},

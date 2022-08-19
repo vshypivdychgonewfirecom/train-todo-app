@@ -1,9 +1,9 @@
 /* eslint-disable import/no-anonymous-default-export */
 import { useTranslation } from "react-i18next";
-import CustomButton from "../../../components/CustomButton";
+import CustomButton from "../../../../components/CustomButton";
 
 export default (props: { handleCancel: Function, handleConfirm: Function }) => {
-  const { t } = useTranslation("dashboard");
+  const { t } = useTranslation("items");
 
   return (
     <footer className="flex items-center p-6 pl-0 space-x-2 rounded-b border-t border-gray-200 border-gray-600">

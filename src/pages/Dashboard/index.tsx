@@ -1,45 +1,41 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
-import CustomButton from "../../components/CustomButton";
-import CustomModal from "../../components/CustomModal";
-import AddItem from "./AddItem";
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import { DashboardContentProvider } from '../../containers/DashBoard/DashboardContentContext';
+import SideBar from '../../containers/DashBoard/SideBar';
+import Main from '../../containers/DashBoard/Main';
 
 export default () => {
-  const { t } = useTranslation("dashboard");
-  const navigate = useNavigate();
-  const [addItemModal, setAddItemModal] = useState(false);
+	const { t } = useTranslation('dashboard');
+	const navigate = useNavigate();
 
-  useEffect(() => {
-    if (
-      !localStorage.getItem("newfire-train-todo-app-token") &&
-      !sessionStorage.getItem("newfire-train-todo-app-token")
-    ) {
-      navigate("../login", { replace: true });
-    }
-  }, [navigate]);
+	const handleLogout = () => {
+		if (localStorage.getItem('newfire-train-todo-app-token')) {
+			localStorage.setItem('newfire-train-todo-app-token', '');
+		}
 
-  return (
-    <div className="home-container flex flex-col">
-      <CustomModal
-        open={addItemModal}
-        onClose={() => setAddItemModal(false)}
-        title={t("add_item.label")}
-        content={<AddItem onClose={() => setAddItemModal(false)} />}
-      />
-      <CustomButton onClick={() => setAddItemModal(true)} text="Add Item" />
-      <CustomButton
-        onClick={() => {
-          if (localStorage.getItem("newfire-train-todo-app-token")) {
-            localStorage.setItem("newfire-train-todo-app-token", "");
-          }
+		sessionStorage.setItem('newfire-train-todo-app-token', '');
+		navigate('../login', { replace: true });
+	};
 
-          sessionStorage.setItem("newfire-train-todo-app-token", "");
-          navigate("../login", { replace: true });
-        }}
-        text="Log out"
-      />
-    </div>
-  );
+	useEffect(() => {
+		if (
+			!localStorage.getItem('newfire-train-todo-app-token') &&
+			!sessionStorage.getItem('newfire-train-todo-app-token')
+		) {
+			navigate('../login', { replace: true });
+		}
+	}, [navigate]);
+
+	return (
+		<div className="home-container flex p-2 h-screen bg-gray-200 gap-1">
+			<DashboardContentProvider>
+				<>
+					<SideBar title={t('title')} handleLogout={handleLogout} />
+					<Main />
+				</>
+			</DashboardContentProvider>
+		</div>
+	);
 };
