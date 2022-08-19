@@ -31,6 +31,7 @@ module.exports = {
 		'indent': ['error', 'tab'],
 		'quote-props': ['warn', 'consistent'],
 		'curly': 'off',
-		'array-callback-return': 'off'
+		'array-callback-return': 'off',
+		'no-new': 0
 	}
 };
