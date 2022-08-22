@@ -10,8 +10,13 @@ export default (props: {
 	const [checked, setChecked] = useState(false);
 	const [edit, setEdit] = useState(false);
 	const editRef = useRef<HTMLInputElement>(null);
-	const { incrementChecked, decrementChecked, addItem, deleteItem } =
-		useContext(ItemsContext);
+	const {
+		incrementChecked,
+		decrementChecked,
+		getItems,
+		editItem,
+		deleteItem
+	} = useContext(ItemsContext);
 
 	const handleCheck = () => {
 		setChecked(!checked);
@@ -34,8 +39,11 @@ export default (props: {
 		setEdit(!edit);
 
 		if (editRef.current && editRef.current.value !== props.label) {
-			deleteItem(props.label);
-			addItem(editRef.current.value);
+			const item = Object.keys(getItems().items).find(
+				(element) => getItems().items[element] === props.label
+			);
+			editItem(item, editRef.current.value);
+			console.log(getItems().items);
 		}
 	};
 

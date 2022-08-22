@@ -56,7 +56,7 @@ export default () => {
 					<FcSearch className="cursor-pointer m-auto" size={30} />
 				</button>
 			</form>
-			<div className="max-w-xl w-full mx-auto">
+			<div className="max-w-xl w-full mx-auto max-h-48 overflow-auto">
 				{(Object.values(getItems().items) as Array<string>)
 					.filter((item) => item.includes(search))
 					.map((element) => (

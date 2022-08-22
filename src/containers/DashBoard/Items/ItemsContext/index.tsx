@@ -3,12 +3,14 @@ import React, { createContext, useState } from 'react';
 const ItemsContext = createContext<{
 	getItems: Function;
 	addItem: Function;
+	editItem: Function;
 	deleteItem: Function;
 	incrementChecked: Function;
 	decrementChecked: Function;
 }>({
 	getItems: () => null,
 	addItem: () => null,
+	editItem: () => null,
 	deleteItem: () => null,
 	incrementChecked: () => null,
 	decrementChecked: () => null
@@ -33,6 +35,10 @@ export const ItemsProvider = (props: { children: React.ReactElement }) => {
 		setItems({ ...items, [item]: item });
 	};
 
+	const editItem = (item: string, newItem: string) => {
+		setItems({ ...items, [item]: newItem });
+	};
+
 	const deleteItem = (item: string) => {
 		delete items[item];
 		setItems({ ...items });
@@ -51,6 +57,7 @@ export const ItemsProvider = (props: { children: React.ReactElement }) => {
 			value={{
 				getItems,
 				addItem,
+				editItem,
 				deleteItem,
 				incrementChecked,
 				decrementChecked
