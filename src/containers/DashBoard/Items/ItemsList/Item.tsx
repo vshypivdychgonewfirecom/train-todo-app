@@ -43,7 +43,6 @@ export default (props: {
 				(element) => getItems().items[element] === props.label
 			);
 			editItem(item, editRef.current.value);
-			console.log(getItems().items);
 		}
 	};
 
