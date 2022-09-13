@@ -1,11 +1,8 @@
 /* eslint-disable import/no-anonymous-default-export */
 import { useTranslation } from 'react-i18next';
-import CustomButton from '../../../components/CustomButton';
+import CustomButton from '../../../../components/CustomButton';
 
-const Footer = (props: {
-	handleCancel: () => void;
-	handleConfirm: () => void;
-}) => {
+const Footer = (props: { handleCancel: Function; handleConfirm: Function }) => {
 	const { t } = useTranslation('dashboard');
 
 	return (

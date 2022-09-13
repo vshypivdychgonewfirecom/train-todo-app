@@ -61,8 +61,8 @@ const Login = () => {
 		});
 	}, []);
 
-	const checkPassword = async (user: IUser, password: string) => {
-		return await bcrypt.compare(password, user.password);
+	const checkPassword = (user: IUser, password: string) => {
+		return bcrypt.compare(password, user.password);
 	};
 
 	const onSubmit = async (data: any) => {

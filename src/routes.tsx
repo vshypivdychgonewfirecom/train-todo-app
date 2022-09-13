@@ -1,16 +1,33 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+/* eslint-disable import/no-anonymous-default-export */
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 
-const PublicRoutes = () => {
+export default () => {
 	return (
 		<BrowserRouter>
 			<Routes>
 				<Route path="/login" element={<Login />} />
-				<Route path="/" element={<Dashboard />} />
+				<Route path="/dashboard" element={<Dashboard />} />
+				<Route
+					path="*"
+					element={
+						<Navigate
+							to={
+								!localStorage.getItem(
+									'newfire-train-todo-app-token'
+								) &&
+								!sessionStorage.getItem(
+									'newfire-train-todo-app-token'
+								)
+									? '/login'
+									: '/dashboard'
+							}
+							replace
+						/>
+					}
+				/>
 			</Routes>
 		</BrowserRouter>
 	);
 };
-
-export default PublicRoutes;

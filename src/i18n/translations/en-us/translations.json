@@ -13,7 +13,9 @@
 		}
 	},
 	"dashboard": {
-		"title": "Dashboard",
+		"title": "Dashboard"
+	},
+	"items": {
 		"add_item": {
 			"label": "Add Item",
 			"modal": {
@@ -29,6 +31,15 @@
 					"cancel": "Cancel"
 				}
 			}
+		},
+		"item_list": {
+			"title": "TODOLIST",
+			"task": {
+				"singular": "task done",
+				"plural": "tasks done",
+				"no": "no tasks avaiable"
+			},
+			"remove_checked": "Remove checked"
 		}
 	},
 	"error": {
@@ -37,5 +48,9 @@
 		"password": "*Invalid password",
 		"min": "*This field must have at least",
 		"characters": "characters"
+	},
+	"words": {
+		"search": "Search",
+		"of": "of"
 	}
 }
