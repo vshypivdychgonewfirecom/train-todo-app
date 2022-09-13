@@ -1,6 +1,6 @@
-/* eslint-disable import/no-anonymous-default-export */
 import { useRef, useEffect, useState, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
+import bcrypt from 'bcryptjs';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -9,22 +9,23 @@ import CustomInput from '../../components/CustomInput';
 import CustomCheckbox from '../../components/CustomCheckbox';
 import CustomButton from '../../components/CustomButton';
 import { emailValidation } from '../../utils/validations';
+import Logo from '../../resource/images/logo.png';
+import useIndexedDB, { IUser } from '../../hooks/useIndexedDB';
 
-const logo = require('../../resource/images/logo.png');
-
-export default () => {
+const Login = () => {
 	const navigate = useNavigate();
-	const { t } = useTranslation(['login', 'error']);
+	const { getItem } = useIndexedDB('userCollection');
+	const { t } = useTranslation('login');
 	const schema = yup
 		.object({
 			email: yup
 				.string()
-				.required(t('required', { ns: 'error' }))
-				.matches(emailValidation, t('email', { ns: 'error' })),
+				.required(t('error.required'))
+				.matches(emailValidation, t('error.email')),
 			password: yup
 				.string()
-				.required(t('required', { ns: 'error' }))
-				.min(6, t('password', { ns: 'error' }))
+				.required(t('error.required'))
+				.min(6, t('error.password'))
 		})
 		.required();
 	const {
@@ -44,14 +45,15 @@ export default () => {
 		},
 		{
 			label: 'password',
-			placeholder: 'password',
+			placeholder: `${t('password').charAt(0).toLocaleUpperCase()}${t(
+				'password'
+			).slice(1)}`,
 			type: 'password'
 		}
 	];
 	const [disabled, setDisabled] = useState(true);
 	const requiredFields = useMemo(() => {
 		const fileds: object = Object.values(schema)[12];
-
 		return Object.entries(fileds).map((element) => {
 			if (element[1].tests[0].OPTIONS.name === 'required') {
 				return element[0];
@@ -59,18 +61,24 @@ export default () => {
 		});
 	}, []);
 
-	const onSubmit = (values: any) => {
-		if (!Object.values(errors).findIndex((element) => element)) return;
-		if (checkboxRef.checked)
-			localStorage.setItem('newfire-train-todo-app-token', 'test');
-
-		sessionStorage.setItem('newfire-train-todo-app-token', 'test');
-		navigate('/dashboard');
+	const checkPassword = (user: IUser, password: string) => {
+		return bcrypt.compare(password, user.password);
 	};
 
+	const onSubmit = async (data: any) => {
+		if (!Object.values(errors).findIndex((element) => element)) return;
+		const user = await getItem(data.email);
+		if (!user) return window.alert('User not found');
+		const match = await checkPassword(user, data.password);
+		if (!match) return window.alert('Password is incorrect');
+		if (checkboxRef.checked)
+			localStorage.setItem('newfire-train-todo-app-token', 'test');
+		sessionStorage.setItem('newfire-train-todo-app-token', 'test');
+		navigate('/');
+	};
 	useEffect(() => {
 		if (localStorage.getItem('newfire-train-todo-app-token')) {
-			navigate('/dashboard', { replace: true });
+			navigate('/', { replace: true });
 		}
 	}, []);
 
@@ -95,9 +103,9 @@ export default () => {
 				}}
 				className="bg-white w-10/12 p-7 sm:p-10 z-10 flex flex-col rounded-lg shadow-2xl items-center pb-12 sm:w-fit"
 			>
-				<img src={logo} alt="newfire-logo" className="w-60 mb-7" />
+				<img src={Logo} alt="newfire-logo" className="w-60 mb-7" />
 				<h1 className="mb-7 text-xl sm:text-2xl self-start">
-					{t('title', { ns: 'login' })}
+					{t('title')}
 				</h1>
 				{formFields.map((element) => (
 					<CustomInput
@@ -111,16 +119,16 @@ export default () => {
 					/>
 				))}
 				<span className="self-start text-sm sm:text-base pl-1 text-amber-500 cursor-pointer hover:text-amber-300">
-					{t('forgot_password', { ns: 'login' })}
+					{t('forgot_password')}
 				</span>
 				<hr className="w-full my-8 d-none" />
 				<div className="w-full justify-center pl-1 sm:w-fit flex flex-col-reverse self-center sm:self-start sm:flex-row items-center">
 					<CustomCheckbox
-						label={t('remember_me', { ns: 'login' })}
+						label={t('remember_me')}
 						refs={checkboxRef}
 					/>
 					<CustomButton
-						text={t('button', { ns: 'login' }).toLocaleUpperCase()}
+						text={t('button').toLocaleUpperCase()}
 						id="login-submit-button"
 						disabled={disabled}
 						onClick={handleSubmit(onSubmit)}
@@ -130,3 +138,5 @@ export default () => {
 		</div>
 	);
 };
+
+export default Login;
